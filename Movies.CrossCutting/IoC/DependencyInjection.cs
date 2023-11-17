@@ -10,10 +10,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Movies.Application;
+using Movies.Application.Mappings;
 using Movies.CrossCutting.IdentityErrors;
 using Movies.Domain.Entities;
 using Movies.Domain.Entities.Enums;
+using Movies.Domain.Generic;
+using Movies.Domain.Interfaces;
 using Movies.Infrastructure.Context;
+using Movies.Infrastructure.Repositories;
 
 namespace Movies.CrossCutting.IoC
 {
@@ -22,7 +26,13 @@ namespace Movies.CrossCutting.IoC
         public static void AddInfrastructure(this IServiceCollection services)
         {
             services.AddValidators();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(AutoMapperInitializer));
+            services.AddSingleton<ICommandResult, CommandResult>();
+            services.AddSingleton(typeof(IGenericCommandResult<>), typeof(GenericCommandResult<>));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationHandler).Assembly));
+            
+            
         }
         public static void AddValidators(this IServiceCollection services)
         {

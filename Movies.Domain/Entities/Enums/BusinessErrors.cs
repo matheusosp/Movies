@@ -9,5 +9,10 @@ namespace Movies.Domain.Entities.Enums
     public enum BusinessErrors
     {
         EmailAlreadyRegistered,
+
+        ErrorOnSaveChangesInDatabase,
+
+        FailToCreateDefi,
+
     }
 }

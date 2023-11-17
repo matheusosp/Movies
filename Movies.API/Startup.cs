@@ -37,6 +37,7 @@ namespace Movies.API
                 });
             });
 
+            services.AddInfrastructure();
             services.AddHostedService<SeedDatabase>();
             services.AddIdentity(Configuration);
             services.AddDataBase(Configuration);
