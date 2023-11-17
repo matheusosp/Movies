@@ -25,6 +25,11 @@ namespace Movies.Infrastructure.Repositories
             if (_context.Movies != null) await _context.Movies.AddAsync(movie, cancellationToken);
         }
 
+        public void UpdateMovie(Movie movie)
+        {
+            _context.Entry(movie).State = EntityState.Modified;
+        }
+
         public void DeleteMovie(Movie movie)
         {
             _context.Movies?.Remove(movie);
