@@ -1,6 +1,6 @@
 using System;
 
-namespace webapi
+namespace Movies.API
 {
     public class WeatherForecast
     {

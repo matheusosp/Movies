@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Movies.CrossCutting.IoC;
 
-namespace webapi
+namespace Movies.API
 {
     public class Startup
     {
@@ -23,31 +18,46 @@ namespace webapi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "webapi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Movies.API", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", policyBuilder =>
+                {
+                    policyBuilder.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
+                });
+            });
+
+            services.AddHostedService<SeedDatabase>();
+            services.AddIdentity(Configuration);
+            services.AddDataBase(Configuration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "webapi v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Movies.API v1"));
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseCors("EnableCORS");
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,0 +1,19 @@
+﻿version: '3.7'
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "1q2w3e4r@#$"
+    ports:
+      - "1433:1433"
+    networks:
+      - defi-bridge
+    volumes:
+      - sqldata:/var/opt/mssql
+networks:
+  defi-bridge:
+    driver: bridge
+volumes:
+  sqldata:
