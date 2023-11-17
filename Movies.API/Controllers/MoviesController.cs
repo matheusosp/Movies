@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using System.Threading;
 using Movies.Application.Commands;
 using Movies.Application.Validators.Movie;
+using Movies.Domain.Interfaces;
+using System.Collections.Generic;
+using Movies.Application.Models;
+using Movies.Application.Queries;
 
 namespace Movies.API.Controllers
 {
@@ -36,6 +40,23 @@ namespace Movies.API.Controllers
         {
             var command = new DeleteMovieCommand(id);
             var result = await Mediator.Send(command, cancellationToken);
+
+            return HandleResult(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteMovies(DeleteMoviesCommand command, CancellationToken cancellationToken)
+        {
+            var result = await Mediator.Send(command, cancellationToken);
+
+            return HandleResult(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDefis(CancellationToken cancellationToken)
+        {
+            var query = new RetrieveMoviesQuery();
+            var result = await Mediator.Send(query, cancellationToken);
 
             return HandleResult(result);
         }
