@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Movies.Application.Commands;
+using Movies.Application.Validators.Movie;
 using Movies.Domain.Entities;
 
 namespace Movies.Application.Mappings
@@ -14,6 +15,8 @@ namespace Movies.Application.Mappings
         public MappingProfile() 
         {
             CreateMap<AddMovieCommand, Movie>().ReverseMap();
+            CreateMap<UpdateMovieCommand, Movie>().ReverseMap();
+            CreateMap<DeleteMovieCommand, Movie>().ReverseMap();
         }
     }
 }

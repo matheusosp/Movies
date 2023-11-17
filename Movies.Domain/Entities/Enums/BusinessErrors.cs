@@ -12,7 +12,9 @@ namespace Movies.Domain.Entities.Enums
 
         ErrorOnSaveChangesInDatabase,
 
-        FailToCreateDefi,
+        FailToCreateMovie,
+        FailToUpdateMovie,
+        FailToDeleteStake
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Movies.Application.Commands;
+using Movies.Domain.Entities.Enums;
 using Movies.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,29 +8,27 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
-using Movies.Domain.Entities.Enums;
 using Movies.Domain.Entities;
 
 namespace Movies.Application.CommandHandlers
 {
-    public class AddMovieCommandHandler : IRequestHandler<AddMovieCommand, ICommandResult>
+    public class UpdateMovieCommandHandler : IRequestHandler<UpdateMovieCommand, ICommandResult>
     {
         private readonly IBaseMovieHandler _base;
 
-        public AddMovieCommandHandler(IBaseMovieHandler baseMovieHandler)
+        public UpdateMovieCommandHandler(IBaseMovieHandler baseMovieHandler)
         {
             _base = baseMovieHandler;
         }
-        public async Task<ICommandResult> Handle(AddMovieCommand request, CancellationToken cancellationToken)
+        public async Task<ICommandResult> Handle(UpdateMovieCommand request, CancellationToken cancellationToken)
         {
             var movie = _base.Mapper.Map<Movie>(request);
 
-            await _base.MovieRepository.CreateMovie(movie, cancellationToken);
+            _base.MovieRepository.UpdateMovie(movie);
 
             return await _base.UnitOfWork.SaveChangesAsync(cancellationToken) != 0
                 ? _base.Result.Ok()
-                : _base.Result.Fail(BusinessErrors.FailToCreateMovie.ToString());
+                : _base.Result.Fail(BusinessErrors.FailToUpdateMovie.ToString());
         }
     }
 }
