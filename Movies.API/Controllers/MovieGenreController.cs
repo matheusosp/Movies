@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using System.Threading;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Movies.Application.Commands.Genre;
 
 namespace Movies.API.Controllers
 {
     [ApiController]
     [Route("api/v1/movie/genre")]
+    [Authorize]
     public class MovieGenreController : BaseController
     {
         public MovieGenreController(IMediator mediator)

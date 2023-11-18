@@ -19,7 +19,8 @@ namespace Movies.Domain.Entities.Enums
 
         FailToCreateGenre,
 
-        FailToCreateMoviesRent
-
+        FailToCreateMoviesRent,
+        EmailNotFound,
+        PasswordIncorrect
     }
 }

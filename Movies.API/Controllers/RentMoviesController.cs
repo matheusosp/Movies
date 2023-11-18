@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Movies.Application.Commands;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 using Movies.Application.Commands.MoviesRent;
 
 namespace Movies.API.Controllers
 {
     [ApiController]
     [Route("api/v1/movie/rent")]
+    [Authorize]
     public class RentMoviesController : BaseController
     {
         public RentMoviesController(IMediator mediator)

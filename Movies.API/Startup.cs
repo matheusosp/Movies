@@ -41,6 +41,7 @@ namespace Movies.API
             services.AddHostedService<SeedDatabase>();
             services.AddIdentity(Configuration);
             services.AddDataBase(Configuration);
+            services.AddSwagger();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Movies.Application;
-using Movies.Application.CommandHandlers;
 using Movies.Application.CommandHandlers.Genres;
 using Movies.Application.CommandHandlers.Movies;
 using Movies.Application.Mappings;
@@ -113,6 +113,36 @@ namespace Movies.CrossCutting.IoC
                             .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     );
                 }
+            });
+        }
+        public static void AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(s =>
+            {
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description =
+                        "Header do JWT Authorization usando o schema Bearer.Informe 'Bearer'[espaço] e a seguir o seu token. Exemplo: \"Bearer 12345abcdef\""
+                });
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
         }
 

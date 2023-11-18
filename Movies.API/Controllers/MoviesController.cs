@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
+using Microsoft.AspNetCore.Authorization;
 using Movies.Application.Commands;
 using Movies.Application.Commands.Movies;
 using Movies.Application.Queries;
@@ -11,6 +12,7 @@ namespace Movies.API.Controllers
 {
     [ApiController]
     [Route("api/v1/movies")]
+    [Authorize]
     public class MoviesController : BaseController
     {
         public MoviesController(IMediator mediator)
