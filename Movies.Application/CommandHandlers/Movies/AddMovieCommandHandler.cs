@@ -20,11 +20,15 @@ namespace Movies.Application.CommandHandlers.Movies
         {
             var movie = _base.Mapper.Map<Movie>(request);
 
+            await _base.UnitOfWork.BeginDatabaseTransactionAsync(cancellationToken);
             await _base.MovieRepository.CreateMovie(movie, cancellationToken);
+            
+            if (await _base.UnitOfWork.SaveChangesWithTransactionAsync(cancellationToken) == 0)
+                return _base.Result.Fail(BusinessErrors.FailToCreateMovie.ToString());
 
-            return await _base.UnitOfWork.SaveChangesAsync(cancellationToken) != 0
-                ? _base.Result.Ok()
-                : _base.Result.Fail(BusinessErrors.FailToCreateMovie.ToString());
+            await _base.UnitOfWork.CommitDatabaseTransactionAsync(cancellationToken);
+
+            return _base.Result.Ok();
         }
     }
 }

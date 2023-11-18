@@ -52,13 +52,20 @@ namespace Movies.Infrastructure.Repositories
         {
             try
             {
-                return await _context.SaveChangesAsync(cancellationToken);
+                var res = await _context.SaveChangesAsync(cancellationToken);
+                if (res == 0)
+                {
+                    await _transaction!.RollbackAsync(cancellationToken);
+                    
+                }
+                return res;
             }
             catch (Exception)
             {
                 if (_transaction != null) await _transaction.RollbackAsync(cancellationToken);
-                throw;
             }
+
+            return 0;
         }
         public async Task<ICommandResult> ExecuteActionWithTransactionAsync
             (Func<Task> action, CancellationToken cancellationToken)

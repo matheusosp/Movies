@@ -14,6 +14,7 @@ namespace Movies.Application.Validators.MoviesRent
         public AddMoviesRentCommandValidator()
         {
             RuleFor(c => c.MoviesIds)
+                .NotEmpty().WithMessage("Propriedade {PropertyName} deve estar preenchida.")
                 .ForEach(id => id.GreaterThan(0).WithMessage("Cada ID deve ser maior que 0"));
 
             RuleFor(c => c.CPFClient)

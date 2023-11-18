@@ -19,11 +19,16 @@ namespace Movies.Application.CommandHandlers.Movies
         public async Task<ICommandResult> Handle(DeleteMovieCommand request, CancellationToken cancellationToken)
         {
             var movie = _base.Mapper.Map<Movie>(request);
+            
+            await _base.UnitOfWork.BeginDatabaseTransactionAsync(cancellationToken);
+            
             _base.MovieRepository.DeleteMovie(movie);
+            if (await _base.UnitOfWork.SaveChangesWithTransactionAsync(cancellationToken) == 0)
+                return _base.Result.Fail(BusinessErrors.FailToDeleteMovie.ToString());
 
-            return await _base.UnitOfWork.SaveChangesAsync(cancellationToken) == 0
-                ? _base.Result.Fail(BusinessErrors.FailToDeleteStake.ToString())
-                : _base.Result.Ok();
+            await _base.UnitOfWork.CommitDatabaseTransactionAsync(cancellationToken);
+
+            return _base.Result.Ok();
         }
     }
 }

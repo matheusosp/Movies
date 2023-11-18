@@ -20,11 +20,15 @@ namespace Movies.Application.CommandHandlers.Genres
         {
             var genre = _base.Mapper.Map<Genre>(request);
 
-            await _base.MovieGenreRepository.CreateGenre(genre, cancellationToken);
+            await _base.UnitOfWork.BeginDatabaseTransactionAsync(cancellationToken);
 
-            return await _base.UnitOfWork.SaveChangesAsync(cancellationToken) != 0
-                ? _base.Result.Ok()
-                : _base.Result.Fail(BusinessErrors.FailToCreateGenre.ToString());
+            await _base.MovieGenreRepository.CreateGenre(genre, cancellationToken);
+            if (await _base.UnitOfWork.SaveChangesWithTransactionAsync(cancellationToken) == 0)
+                return _base.Result.Fail(BusinessErrors.FailToCreateGenre.ToString());
+
+            await _base.UnitOfWork.CommitDatabaseTransactionAsync(cancellationToken);
+
+            return _base.Result.Ok();
         }
     }
 }

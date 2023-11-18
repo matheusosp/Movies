@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using Movies.Application.Commands;
 using Movies.Domain.Entities.Enums;
 using Movies.Domain.Entities;
 using Movies.Domain.Generic;
 using Movies.Domain.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Movies.Application.Commands.MoviesRent;
@@ -43,12 +39,16 @@ namespace Movies.Application.CommandHandlers.MoviesRent
                 CPFClient = request.CPFClient,
                 RentDate = DateTime.Now
             };
-
+            
+            await _unitOfWork.BeginDatabaseTransactionAsync(cancellationToken);
             await _moviesRentRepository.CreateMovieRent(moviesRent, cancellationToken);
 
-            return await _unitOfWork.SaveChangesAsync(cancellationToken) != 0
-                ? _result.Ok()
-                : _result.Fail(BusinessErrors.FailToCreateMoviesRent.ToString());
+            if (await _unitOfWork.SaveChangesWithTransactionAsync(cancellationToken) == 0)
+                return _result.Fail(BusinessErrors.FailToCreateMoviesRent.ToString());
+
+            await _unitOfWork.CommitDatabaseTransactionAsync(cancellationToken);
+
+            return _result.Ok();
         }
     }
 }

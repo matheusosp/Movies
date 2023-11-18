@@ -14,7 +14,8 @@ namespace Movies.Domain.Entities.Enums
 
         FailToCreateMovie,
         FailToUpdateMovie,
-        FailToDeleteStake,
+        FailToDeleteMovie,
+        FailToDeleteMovies,
 
         FailToCreateGenre,
 

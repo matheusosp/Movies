@@ -17,11 +17,15 @@ namespace Movies.Application.CommandHandlers.Movies
         }
         public async Task<ICommandResult> Handle(DeleteMoviesCommand request, CancellationToken cancellationToken)
         {
+            await _base.UnitOfWork.BeginDatabaseTransactionAsync(cancellationToken);
+            
             _base.MovieRepository.DeleteMovies(request.Ids);
+            if (await _base.UnitOfWork.SaveChangesWithTransactionAsync(cancellationToken) == 0)
+                return _base.Result.Fail(BusinessErrors.FailToDeleteMovies.ToString());
 
-            return await _base.UnitOfWork.SaveChangesAsync(cancellationToken) == 0
-                ? _base.Result.Fail(BusinessErrors.FailToDeleteStake.ToString())
-                : _base.Result.Ok();
+            await _base.UnitOfWork.CommitDatabaseTransactionAsync(cancellationToken);
+
+            return _base.Result.Ok();
         }
     }
 }
