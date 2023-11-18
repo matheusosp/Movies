@@ -64,6 +64,9 @@ namespace Movies.Unit.Tests.Commands.Movies
             // Assert
             result.Success.Should().BeTrue();
         }
+        //Ta Falhando por conta do ValidationBehavior do MediatR que não esta sendo chamado aqui
+        //Ele é chamado só quando o mediator.Send(command) é chamado e é executado antes do Handler,
+        //teria que pesquisar um jeito de arrumar essa parte nos testes
         [Test]
         public async Task DadoUmAddMovieCommandInvalidoNaoDeveAdicionarOFilme()
         {
