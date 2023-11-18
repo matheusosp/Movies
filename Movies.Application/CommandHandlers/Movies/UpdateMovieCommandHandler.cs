@@ -18,10 +18,11 @@ namespace Movies.Application.CommandHandlers
         }
         public async Task<ICommandResult> Handle(UpdateMovieCommand request, CancellationToken cancellationToken)
         {
-            var movie = _base.Mapper.Map<Movie>(request);
+            var databaseMovie = await _base.MovieRepository.GetBy(s => s.Id == request.Id, cancellationToken);
+            var movie = _base.Mapper.Map(request, databaseMovie);
 
             _base.MovieRepository.UpdateMovie(movie);
-
+                
             return await _base.UnitOfWork.SaveChangesAsync(cancellationToken) != 0
                 ? _base.Result.Ok()
                 : _base.Result.Fail(BusinessErrors.FailToUpdateMovie.ToString());
