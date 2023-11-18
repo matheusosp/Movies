@@ -5,6 +5,7 @@ using Movies.Domain.Entities;
 using Movies.Domain.Generic;
 using Movies.Domain.Interfaces;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Movies.Application.Commands.MoviesRent;
@@ -30,8 +31,11 @@ namespace Movies.Application.CommandHandlers.MoviesRent
         }
         public async Task<ICommandResult> Handle(AddMoviesRentCommand request, CancellationToken cancellationToken)
         {
+            //Sem filmes repetidos em uma unica locação
+            var uniqueMovieIds = request.MoviesIds.Distinct().ToList();
+
             var movies = await _movieRepository
-                                            .GetAllByWithTracking(m => request.MoviesIds.Contains(m.Id), cancellationToken);
+                .GetAllByWithTracking(m => uniqueMovieIds.Contains(m.Id), cancellationToken);
 
             var moviesRent = new MovieRent
             {
