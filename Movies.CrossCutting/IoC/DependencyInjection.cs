@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Movies.Application.CommandHandlers;
 using Movies.Application.CommandHandlers.Genres;
 using Movies.Application.CommandHandlers.Movies;
 using Movies.Application.Mappings;
+using Movies.Application.Validators;
 using Movies.CrossCutting.IdentityErrors;
 using Movies.Domain.Entities;
 using Movies.Domain.Entities.Enums;
@@ -37,6 +39,7 @@ namespace Movies.CrossCutting.IoC
             services.AddScoped<IMovieGenreRepository, MovieGenreRepository>();
             services.AddScoped<IBaseMovieGenreHandler, BaseMovieGenreHandler>();
             services.AddScoped<IMoviesRentRepository, MoviesRentRepository>();
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddSingleton(typeof(IGenericCommandResult<>), typeof(GenericCommandResult<>));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationHandler).Assembly));
             

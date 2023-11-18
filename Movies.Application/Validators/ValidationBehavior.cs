@@ -1,13 +1,10 @@
-﻿using FluentValidation;
-using MediatR;
-using Movies.Domain.Generic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.Logging;
+using Movies.Domain.Generic;
 
 namespace Movies.Application.Validators
 {
