@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Movies.Domain.Interfaces;
+using Movies.Domain.Generic;
 
 namespace Movies.API.Controllers
 {

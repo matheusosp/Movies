@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Movies.Application.Commands;
 using Movies.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,8 +7,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Movies.Application.Commands;
 using Movies.Domain.Entities.Enums;
 using Movies.Domain.Entities;
+using Movies.Domain.Generic;
 
 namespace Movies.Application.CommandHandlers
 {

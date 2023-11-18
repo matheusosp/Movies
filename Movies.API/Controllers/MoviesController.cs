@@ -4,14 +4,12 @@ using System.Threading.Tasks;
 using System.Threading;
 using Movies.Application.Commands;
 using Movies.Application.Validators.Movie;
-using Movies.Domain.Interfaces;
-using System.Collections.Generic;
-using Movies.Application.Models;
 using Movies.Application.Queries;
 
 namespace Movies.API.Controllers
 {
     [ApiController]
+    [Route("api/v1/movies")]
     public class MoviesController : BaseController
     {
         public MoviesController(IMediator mediator)
@@ -53,9 +51,9 @@ namespace Movies.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDefis(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllMovies(CancellationToken cancellationToken)
         {
-            var query = new RetrieveMoviesQuery();
+            var query = new RetrieveAllMoviesQuery();
             var result = await Mediator.Send(query, cancellationToken);
 
             return HandleResult(result);

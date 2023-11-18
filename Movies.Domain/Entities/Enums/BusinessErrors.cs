@@ -14,7 +14,9 @@ namespace Movies.Domain.Entities.Enums
 
         FailToCreateMovie,
         FailToUpdateMovie,
-        FailToDeleteStake
+        FailToDeleteStake,
+
+        FailToCreateGender
 
     }
 }

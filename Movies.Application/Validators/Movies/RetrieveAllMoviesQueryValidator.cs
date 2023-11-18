@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Movies.Application.Validators.Movie
 {
-    public class RetrieveMoviesQueryValidator : AbstractValidator<RetrieveMoviesQueryValidator>
+    public class RetrieveAllMoviesQueryValidator : AbstractValidator<RetrieveAllMoviesQueryValidator>
     {
-        public RetrieveMoviesQueryValidator()
+        public RetrieveAllMoviesQueryValidator()
         {
             
         }

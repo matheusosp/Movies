@@ -34,15 +34,21 @@ namespace Movies.Infrastructure.Repositories
         {
             _context.Movies?.Remove(movie);
         }
-        public void DeleteMovies(IEnumerable<Movie> movie)
+        public void RemoveMovies(List<long> movieIds)
         {
-            _context.Movies?.RemoveRange(movie);
+            var moviesToRemove = _context.Movies.Where(m => movieIds.Contains(m.Id));
+
+            DeleteMovies(moviesToRemove);
+        }
+        public void DeleteMovies(IEnumerable<Movie> movies)
+        {
+            _context.Movies?.RemoveRange(movies);
         }
         public async Task<IEnumerable<Movie>> GetAll(CancellationToken cancellationToken)
         {
             return await _context.Movies!.ToListAsync(cancellationToken);
         }
-        public async Task<IEnumerable<Movie>?> GetAllBy(Expression<Func<Movie, bool>> predicate,
+        public async Task<IEnumerable<Movie>> GetAllBy(Expression<Func<Movie, bool>> predicate,
             CancellationToken cancellationToken)
         {
             if (_context.Movies == null) return null;

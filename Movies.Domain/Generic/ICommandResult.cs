@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Movies.Domain.Interfaces
+namespace Movies.Domain.Generic
 {
     public interface ICommandResult
     {

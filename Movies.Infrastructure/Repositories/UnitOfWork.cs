@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using Movies.Domain.Entities.Enums;
-using Movies.Domain.Interfaces;
 using Movies.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Movies.Domain.Generic;
+using Movies.Domain.Interfaces;
 
 namespace Movies.Infrastructure.Repositories
 {
@@ -15,7 +16,7 @@ namespace Movies.Infrastructure.Repositories
     {
         private readonly ApplicationDbContext _context;
         private bool _disposed;
-        private IDbContextTransaction? _transaction;
+        private IDbContextTransaction _transaction;
         private readonly ICommandResult _commandResult;
 
         public UnitOfWork(ApplicationDbContext context, ICommandResult commandResult)

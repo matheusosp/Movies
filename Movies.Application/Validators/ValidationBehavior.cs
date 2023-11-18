@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
 using Movies.Domain.Generic;
-using Movies.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
