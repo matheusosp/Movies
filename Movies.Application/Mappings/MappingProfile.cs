@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Movies.Application.Commands;
@@ -13,14 +14,17 @@ namespace Movies.Application.Mappings
     {
         public MappingProfile() 
         {
-            CreateMap<AddMovieCommand, Movie>();
+            CreateMap<AddMovieCommand, Movie>()
+                .ForMember(dest => dest.RegistrationDate,
+                    opt => opt.MapFrom(src => DateTime.Now));
             CreateMap<UpdateMovieCommand, Movie>();
             CreateMap<DeleteMovieCommand, Movie>();
 
-            CreateMap<AddGenderCommand, Gender>();
+            CreateMap<AddGenderCommand, Gender>()
+                .ForMember(dest => dest.RegistrationDate,
+                    opt => opt.MapFrom(src => DateTime.Now));
 
             CreateMap<Movie, MovieResponse>();
-            CreateMap<IEnumerable<Movie>, List<MovieResponse>>();
         }
     }
 }

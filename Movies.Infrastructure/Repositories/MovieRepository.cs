@@ -48,7 +48,7 @@ namespace Movies.Infrastructure.Repositories
         }
         public async Task<IEnumerable<Movie>> GetAll(CancellationToken cancellationToken)
         {
-            return await _context.Movies!.ToListAsync(cancellationToken);
+            return await _context.Movies!.Include(m => m.Gender).ToListAsync(cancellationToken);
         }
         public async Task<IEnumerable<Movie>> GetAllBy(Expression<Func<Movie, bool>> predicate,
             CancellationToken cancellationToken)
