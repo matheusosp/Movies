@@ -11,7 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Movies.Application;
 using Movies.Application.CommandHandlers;
-using Movies.Application.CommandHandlers.Genders;
+using Movies.Application.CommandHandlers.Genres;
+using Movies.Application.CommandHandlers.Movies;
 using Movies.Application.Mappings;
 using Movies.CrossCutting.IdentityErrors;
 using Movies.Domain.Entities;
@@ -31,10 +32,11 @@ namespace Movies.CrossCutting.IoC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperInitializer));
             services.AddSingleton<ICommandResult, CommandResult>();
-            services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IMovieRepository, MovieRepository>();        
             services.AddScoped<IBaseMovieHandler, BaseMovieHandler>();         
-            services.AddScoped<IGenderRepository, GenderRepository>();
-            services.AddScoped<IBaseGenderHandler, BaseGenderHandler>();
+            services.AddScoped<IMovieGenreRepository, MovieGenreRepository>();
+            services.AddScoped<IBaseMovieGenreHandler, BaseMovieGenreHandler>();
+            services.AddScoped<IMoviesRentRepository, MoviesRentRepository>();
             services.AddSingleton(typeof(IGenericCommandResult<>), typeof(GenericCommandResult<>));
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationHandler).Assembly));
             

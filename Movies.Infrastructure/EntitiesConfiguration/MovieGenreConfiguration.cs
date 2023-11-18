@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Movies.Infrastructure.EntitiesConfiguration
 {
-    public class GenderConfiguration : IEntityTypeConfiguration<Gender>
+    public class MovieGenreConfiguration : IEntityTypeConfiguration<Genre>
     {
-        public void Configure(EntityTypeBuilder<Gender> builder)
+        public void Configure(EntityTypeBuilder<Genre> builder)
         {
             builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
             builder.Property(p => p.RegistrationDate);

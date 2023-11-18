@@ -15,8 +15,8 @@ namespace Movies.Domain.Entities
 
         public bool Active { get; set; }
 
-        public Gender Gender { get; set; }
-        public long GenderId { get; set; }
+        public Genre Genre { get; set; }
+        public long GenreId { get; set; }
 
         public List<MovieRent> MovieRents { get; set; }
     }

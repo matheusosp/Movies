@@ -1,12 +1,12 @@
-﻿using MediatR;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
+using Movies.Application.Commands.Movies;
 using Movies.Domain.Entities;
 using Movies.Domain.Entities.Enums;
-using System.Threading;
-using System.Threading.Tasks;
-using Movies.Application.Validators.Movie;
 using Movies.Domain.Generic;
 
-namespace Movies.Application.CommandHandlers
+namespace Movies.Application.CommandHandlers.Movies
 {
     public class DeleteMovieCommandHandler : IRequestHandler<DeleteMovieCommand, ICommandResult>
     {

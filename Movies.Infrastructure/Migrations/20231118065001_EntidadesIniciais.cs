@@ -48,7 +48,7 @@ namespace Movies.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Genders",
+                name: "Genres",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -59,7 +59,7 @@ namespace Movies.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genders", x => x.Id);
+                    table.PrimaryKey("PK_Genres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,15 +191,15 @@ namespace Movies.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
-                    GenderId = table.Column<long>(type: "bigint", nullable: false)
+                    GenreId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movies_Genders_GenderId",
-                        column: x => x.GenderId,
-                        principalTable: "Genders",
+                        name: "FK_Movies_Genres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -268,9 +268,9 @@ namespace Movies.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movies_GenderId",
+                name: "IX_Movies_GenreId",
                 table: "Movies",
-                column: "GenderId");
+                column: "GenreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MoviesRents_MoviesId",
@@ -311,7 +311,7 @@ namespace Movies.Infrastructure.Migrations
                 name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Genders");
+                name: "Genres");
         }
     }
 }

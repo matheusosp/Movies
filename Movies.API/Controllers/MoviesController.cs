@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Threading;
 using Movies.Application.Commands;
-using Movies.Application.Validators.Movie;
+using Movies.Application.Commands.Movies;
 using Movies.Application.Queries;
+using Movies.Application.Queries.Movies;
 
 namespace Movies.API.Controllers
 {

@@ -10,7 +10,7 @@ using Movies.Infrastructure.Context;
 namespace Movies.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231117044626_EntidadesIniciais")]
+    [Migration("20231118065001_EntidadesIniciais")]
     partial class EntidadesIniciais
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -167,7 +167,7 @@ namespace Movies.Infrastructure.Migrations
                     b.ToTable("MoviesRents");
                 });
 
-            modelBuilder.Entity("Movies.Domain.Entities.Gender", b =>
+            modelBuilder.Entity("Movies.Domain.Entities.Genre", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -187,7 +187,7 @@ namespace Movies.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genders");
+                    b.ToTable("Genres");
                 });
 
             modelBuilder.Entity("Movies.Domain.Entities.Movie", b =>
@@ -200,7 +200,7 @@ namespace Movies.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<long>("GenderId")
+                    b.Property<long>("GenreId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
@@ -213,7 +213,7 @@ namespace Movies.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GenderId");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
                 });
@@ -374,13 +374,13 @@ namespace Movies.Infrastructure.Migrations
 
             modelBuilder.Entity("Movies.Domain.Entities.Movie", b =>
                 {
-                    b.HasOne("Movies.Domain.Entities.Gender", "Gender")
+                    b.HasOne("Movies.Domain.Entities.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenderId")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Gender");
+                    b.Navigation("Genre");
                 });
 #pragma warning restore 612, 618
         }

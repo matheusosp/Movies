@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using Movies.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Movies.Domain.Generic;
+using Movies.Domain.Interfaces;
 
-namespace Movies.Application.CommandHandlers
+namespace Movies.Application.CommandHandlers.Movies
 {
     public interface IBaseMovieHandler
     {

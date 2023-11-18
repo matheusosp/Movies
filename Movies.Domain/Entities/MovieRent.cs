@@ -9,7 +9,7 @@ namespace Movies.Domain.Entities
 {
     public class MovieRent : Entity
     {
-        public List<Movie> Movies { get; set; }
+        public IEnumerable<Movie> Movies { get; set; }
         public string CPFClient { get; set; }
         public DateTime RentDate { get; set; }
     }

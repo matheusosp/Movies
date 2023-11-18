@@ -17,6 +17,8 @@ namespace Movies.Domain.Interfaces
         void DeleteMovies(IEnumerable<long> movieIds);
         void DeleteMovies(IEnumerable<Movie> movies);
         Task<IEnumerable<Movie>> GetAll(CancellationToken cancellationToken);
+        Task<IEnumerable<Movie>> GetAllByWithTracking(Expression<Func<Movie, bool>> predicate,
+            CancellationToken cancellationToken);
         Task<IEnumerable<Movie>> GetAllBy(Expression<Func<Movie, bool>> predicate, CancellationToken cancellationToken);
         Task<Movie> GetBy(Expression<Func<Movie, bool>> predicate, CancellationToken cancellationToken);
     }

@@ -2,21 +2,21 @@
 using Movies.Domain.Generic;
 using Movies.Domain.Interfaces;
 
-namespace Movies.Application.CommandHandlers.Genders
+namespace Movies.Application.CommandHandlers.Genres
 {
-    public class BaseGenderHandler : IBaseGenderHandler
+    public class BaseMovieGenreHandler : IBaseMovieGenreHandler
     {
-        public BaseGenderHandler(IGenderRepository genderRepository, IMapper mapper,
+        public BaseMovieGenreHandler(IMovieGenreRepository movieGenreRepository, IMapper mapper,
             IUnitOfWork unitOfWork, ICommandResult commandResult)
         {
             Mapper = mapper;
             UnitOfWork = unitOfWork;
-            GenderRepository = genderRepository;
+            MovieGenreRepository = movieGenreRepository;
             Result = commandResult;
         }
 
         public IMapper Mapper { get; }
-        public IGenderRepository GenderRepository { get; }
+        public IMovieGenreRepository MovieGenreRepository { get; }
         public IUnitOfWork UnitOfWork { get; }
         public ICommandResult Result { get; }
     }

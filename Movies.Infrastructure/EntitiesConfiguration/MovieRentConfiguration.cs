@@ -23,8 +23,8 @@ namespace Movies.Infrastructure.EntitiesConfiguration
             // quando o mesmo não esta alugado para outra pessoa
             builder
                 .HasMany(mr => mr.Movies)     
-                .WithMany(m => m.MovieRents)
-                .UsingEntity(j => j.ToTable("MoviesRents"));
+                .WithMany(m => m.MovieRents);
+
         }
     }
 }

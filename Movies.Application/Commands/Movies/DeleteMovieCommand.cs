@@ -1,13 +1,7 @@
 ﻿using MediatR;
-using Movies.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Movies.Domain.Generic;
 
-namespace Movies.Application.Validators.Movie
+namespace Movies.Application.Commands.Movies
 {
     public class DeleteMovieCommand : IRequest<ICommandResult>
     {

@@ -16,7 +16,7 @@ namespace Movies.Application.Models
 
         public bool Active { get; set; }
 
-        public Gender Gender { get; set; }
+        public Genre Genre { get; set; }
 
     }
 }

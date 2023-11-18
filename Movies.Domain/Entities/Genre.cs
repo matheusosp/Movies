@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Movies.Domain.Entities
 {
-    public class Gender : Entity
+    public class Genre : Entity
     {
         public string Name { get; set; }
         public DateTime RegistrationDate { get; set; }

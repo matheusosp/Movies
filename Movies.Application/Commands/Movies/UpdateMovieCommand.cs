@@ -1,14 +1,8 @@
-﻿using MediatR;
-using Movies.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using MediatR;
 using Movies.Domain.Generic;
-using System.Text.Json.Serialization;
 
-namespace Movies.Application.Commands
+namespace Movies.Application.Commands.Movies
 {
     public class UpdateMovieCommand : IRequest<ICommandResult>
     {
@@ -16,6 +10,6 @@ namespace Movies.Application.Commands
         public long Id { get; set; }
         public string Name { get; set; }
         public bool Active { get; set; }
-        public long GenderId { get; set; }
+        public long GenreId { get; set; }
     }
 }

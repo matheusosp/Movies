@@ -6,6 +6,7 @@ using AutoMapper;
 using MediatR;
 using Movies.Application.Models;
 using Movies.Application.Queries;
+using Movies.Application.Queries.Movies;
 using Movies.Domain.Entities;
 using Movies.Domain.Generic;
 using Movies.Domain.Interfaces;

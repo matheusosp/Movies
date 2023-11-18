@@ -2,12 +2,12 @@
 using Movies.Domain.Generic;
 using Movies.Domain.Interfaces;
 
-namespace Movies.Application.CommandHandlers.Genders
+namespace Movies.Application.CommandHandlers.Genres
 {
-    public interface IBaseGenderHandler
+    public interface IBaseMovieGenreHandler
     {
         IMapper Mapper { get; }
-        IGenderRepository GenderRepository { get; }
+        IMovieGenreRepository MovieGenreRepository { get; }
         IUnitOfWork UnitOfWork { get; }
         ICommandResult Result { get; }
     }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentValidation;
-using Movies.Application.Commands;
+﻿using FluentValidation;
+using Movies.Application.Commands.Movies;
 
-namespace Movies.Application.Validators.Movie
+namespace Movies.Application.Validators.Movies
 {
     public class AddMovieCommandValidator : AbstractValidator<AddMovieCommand>
     {
@@ -16,7 +11,7 @@ namespace Movies.Application.Validators.Movie
                 .NotEmpty().WithMessage("Propriedade {PropertyName} deve estar preenchida.")
                 .Length(2, 200).WithMessage("{PropertyName} deve ter entre {MinLength} e {MaxLength} characters");
 
-            RuleFor(c => c.GenderId)
+            RuleFor(c => c.GenreId)
                 .GreaterThan(0).WithMessage("{PropertyName} deve ser maior que 0");
 
         }

@@ -1,12 +1,11 @@
-﻿using MediatR;
-using Movies.Domain.Entities.Enums;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-using Movies.Application.Commands;
-using Movies.Domain.Entities;
+using MediatR;
+using Movies.Application.Commands.Movies;
+using Movies.Domain.Entities.Enums;
 using Movies.Domain.Generic;
 
-namespace Movies.Application.CommandHandlers
+namespace Movies.Application.CommandHandlers.Movies
 {
     public class UpdateMovieCommandHandler : IRequestHandler<UpdateMovieCommand, ICommandResult>
     {
