@@ -34,12 +34,14 @@ namespace Movies.Infrastructure.Repositories
         {
             _context.Movies?.Remove(movie);
         }
-        public void RemoveMovies(List<long> movieIds)
+
+        public void DeleteMovies(IEnumerable<long> movieIds)
         {
             var moviesToRemove = _context.Movies.Where(m => movieIds.Contains(m.Id));
 
             DeleteMovies(moviesToRemove);
         }
+
         public void DeleteMovies(IEnumerable<Movie> movies)
         {
             _context.Movies?.RemoveRange(movies);
