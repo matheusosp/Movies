@@ -32,9 +32,9 @@ Cada projeto representa uma camada. As responsabilidades de cada camada sao:
 	- Infraestrutura: servicos externos e camada de acesso a dados (Projeto Movies.Infra).
 
 ### Deploy	
-```
-	Backend: https://moviesapi20231119053312.azurewebsites.net
-	Frontend: https://moviesfrontend-iota.vercel.app
-```
+
+Backend: https://moviesapi20231119053312.azurewebsites.net
+Frontend: https://moviesfrontend-iota.vercel.app
+
 
 ### Eu coloquei a ConnectionString do banco de dados de produção no appsettings.Production.json propositalmente para facilitar testes, caso queira conectar...
