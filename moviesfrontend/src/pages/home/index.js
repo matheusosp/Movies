@@ -35,7 +35,7 @@ export default function Movies() {
             }
         };
 
-        const user = JSON.parse(atob(localStorage.getItem('user')));
+        const user = atob(localStorage.getItem('user'));
         if(!user || !user.accessToken || (new Date(user.expiration).getTime() < new Date().getTime())){
             authenticate()
                 .then(data => {
