@@ -1,3 +1,14 @@
+# Filmes
+
+## Features:
+- Listar os filmes cadastrados
+- Cadastrar um novo filme
+- Editar um filme
+- Remover um filme individualmente
+- Remover vários filmes de uma só vez
+### Autenticação foi implementada no backend, no frontend não foi feita uma tela de login, a autenticação foi feita "hard-coded" no frontend para facilitar
+### Email "userMaster@gmail.com" Password "1234" se o token desse usuario não estiver setado no Header das requisições vai ser retornado 401(Unauthorized)
+
 ﻿## Rodando a Aplicação localmente
 Para rodar a api localmente, o dotnet 5.0 e o SQL Server precisam estar instalados e seguir com os seguintes comandos:
 1. `cd Movies.API`
