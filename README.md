@@ -12,8 +12,9 @@
 ﻿## Rodando a Aplicação localmente
 Para rodar a api localmente, o dotnet 5.0 e o SQL Server precisam estar instalados e seguir com os seguintes comandos:
 1. `cd Movies.API`
-2. `dotnet run`
-### Se o docker estiver instalado é só rodar um docker-compose up na pasta do projeto da API que o SQlServer vai subir
+2. Alterar a ConnectionString DefaultConnection no appsettings.Development.json
+3. `dotnet run`
+### Se o docker estiver instalado é só rodar um docker-compose up na pasta do projeto da API que o SQlServer vai subir com a ConnectionString configurada no appsettings.Development
 Para rodar o frontend localmente, é preciso seguir com os seguintes comandos:
 1. `cd moviesfrontend
 2. `npm install`
