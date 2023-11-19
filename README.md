@@ -9,10 +9,8 @@ Para rodar o frontend localmente, é preciso seguir com os seguintes comandos:
 3. `npm start`
 
 No seu navegador, entre nos seguintes Link:
-```
-	Backend: https://localhost:5001/swagger/index.html
-	Frontend: http://localhost:3000/
-```
+### Backend: https://localhost:5001/swagger/index.html
+### Frontend: http://localhost:3000/
 
 ![](swagger.png)
 ![](Tests.png)
@@ -33,8 +31,8 @@ Cada projeto representa uma camada. As responsabilidades de cada camada sao:
 
 ### Deploy	
 
-Backend: https://moviesapi20231119053312.azurewebsites.net
-Frontend: https://moviesfrontend-iota.vercel.app
+### Backend: https://moviesapi20231119053312.azurewebsites.net
+### Frontend: https://moviesfrontend-iota.vercel.app
 
 
 ### Eu coloquei a ConnectionString do banco de dados de produção no appsettings.Production.json propositalmente para facilitar testes, caso queira conectar...
