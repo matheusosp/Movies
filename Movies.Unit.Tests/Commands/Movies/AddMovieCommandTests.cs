@@ -210,28 +210,28 @@ namespace Movies.Unit.Tests.Commands.Movies
             return result.ToString();
         }
     }
-}
-public class AddMovieCommandHandlerFake
-{
-    private readonly IBaseMovieHandler _baseMovieHandler;
-    private readonly AddMovieCommandValidator _validator;
-
-    public AddMovieCommandHandlerFake(IBaseMovieHandler baseMovieHandler, AddMovieCommandValidator validator)
+    public class AddMovieCommandHandlerFake
     {
-        _baseMovieHandler = baseMovieHandler;
-        _validator = validator;
-    }
+        private readonly IBaseMovieHandler _baseMovieHandler;
+        private readonly AddMovieCommandValidator _validator;
 
-    public async Task<ICommandResult> Handle(AddMovieCommand command)
-    {
-        var validationResult = await _validator.ValidateAsync(command);
-
-        if (!validationResult.IsValid)
+        public AddMovieCommandHandlerFake(IBaseMovieHandler baseMovieHandler, AddMovieCommandValidator validator)
         {
-            return _baseMovieHandler.Result.Fail(string.Join('\n', validationResult.Errors));
+            _baseMovieHandler = baseMovieHandler;
+            _validator = validator;
         }
 
-        var commandHandler = new AddMovieCommandHandler(_baseMovieHandler);
-        return await commandHandler.Handle(command, default);
+        public async Task<ICommandResult> Handle(AddMovieCommand command)
+        {
+            var validationResult = await _validator.ValidateAsync(command);
+
+            if (!validationResult.IsValid)
+            {
+                return _baseMovieHandler.Result.Fail(string.Join('\n', validationResult.Errors));
+            }
+
+            var commandHandler = new AddMovieCommandHandler(_baseMovieHandler);
+            return await commandHandler.Handle(command, default);
+        }
     }
 }
