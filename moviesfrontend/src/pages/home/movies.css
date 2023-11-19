@@ -9,6 +9,9 @@
 
 .lista-filmes {
     margin: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 .lista-filmes article {
@@ -44,8 +47,28 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
+.filme-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-/* Adicione estilos para o formulário de edição */
+.filme-card:hover {
+    background-color: #555;
+}
+
+.filme-card.selected {
+    background-color: #666;
+}
+
+
 form {
     display: flex;
     flex-direction: column;
@@ -55,12 +78,12 @@ form {
     margin: 15px;
     padding: 15px;
     border-radius: 5px;
-    background-color: #fff; /* Cor de fundo branca, ajuste conforme necessário */
+    background-color: #fff;
 }
 
 label {
     margin-bottom: 8px;
-    color: #000; /* Cor do texto preta, ajuste conforme necessário */
+    color: #000;
 }
 
 input {
@@ -71,12 +94,16 @@ input {
 }
 
 button {
+    margin-top: 15px;
+    margin-right: 10px;
     padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     border: none;
     cursor: pointer;
     font-size: 16px;
+    border-radius: 5px;
+    outline: none;
 }
 
 button:hover {

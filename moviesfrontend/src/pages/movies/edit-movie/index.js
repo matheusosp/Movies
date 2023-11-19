@@ -128,6 +128,9 @@ export default function Movie() {
                     <button type="button" onClick={salvarFilme}>
                         Salvar
                     </button>
+                    <Link to="/">
+                        <button type="button">Voltar</button>
+                    </Link>
                 </div>
             </form>
         </article>
