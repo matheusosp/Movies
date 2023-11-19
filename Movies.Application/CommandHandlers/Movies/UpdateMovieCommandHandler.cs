@@ -18,6 +18,11 @@ namespace Movies.Application.CommandHandlers.Movies
         public async Task<ICommandResult> Handle(UpdateMovieCommand request, CancellationToken cancellationToken)
         {
             var databaseMovie = await _base.MovieRepository.GetBy(s => s.Id == request.Id, cancellationToken);
+            if(databaseMovie == null)
+                return _base.Result.Fail(BusinessErrors.MovieNotFound.ToString());
+            
+            if(databaseMovie.Genre.Active == false)
+                return _base.Result.Fail(BusinessErrors.MovieGenreIsInactive.ToString());
             var movie = _base.Mapper.Map(request, databaseMovie);
 
             await _base.UnitOfWork.BeginDatabaseTransactionAsync(cancellationToken);

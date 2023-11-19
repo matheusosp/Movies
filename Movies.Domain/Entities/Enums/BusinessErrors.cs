@@ -17,11 +17,12 @@ namespace Movies.Domain.Entities.Enums
         FailToUpdateMovie,
         FailToDeleteMovie,
         FailToDeleteMovies,
-
+        MovieGenreIsInactive,
         FailToCreateGenre,
 
         FailToCreateMoviesRent,
         EmailNotFound,
-        PasswordIncorrect
+        PasswordIncorrect,
+        MovieNotFound
     }
 }

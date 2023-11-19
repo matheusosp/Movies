@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
-using FluentValidation.Results;
 using Moq;
 using Movies.Application.CommandHandlers.Movies;
 using Movies.Application.Commands.Movies;
@@ -21,61 +18,38 @@ using NUnit.Framework;
 namespace Movies.Unit.Tests.Commands.Movies
 {
     [TestFixture]
-    public class AddMovieCommandTests
+    public class DeleteMoviesCommandHandlerTests
     {
         [Test]
-        public async Task DadoUmAddMovieCommandValidoDeveAdicionarOFilme()
+        public async Task DadoUmDeleteMoviesCommandValidoDeveDeletarOsFilmes()
         {
             // Arrange
             var handler = GetCommandHandler();
             
             // Act
-            var result = await handler.Handle(_successAddMovieCommand);
+            var result = await handler.Handle(_successDeleteMoviesCommand);
             
             // Assert
             result.Success.Should().BeTrue();
         }
         [Test]
-        public async Task DadoUmAddMovieCommandComActiveFalseValidoDeveAdicionarOFilme()
+        public async Task DadoUmDeleteMoviesCommandInValidoNaoDeveDeletarOsFilmes()
         {
             // Arrange
             var handler = GetCommandHandler();
-            _successAddMovieCommand!.Active = false;
+            var command = new DeleteMoviesCommand(new List<long>
+            {
+                0,1
+            });
             
             // Act
-            var result = await handler.Handle(_successAddMovieCommand);
+            var result = await handler.Handle(command);
             
-            // Assert
-            result.Success.Should().BeTrue();
-        } 
-        [Test]
-        public async Task DadoUmAddMovieCommandComGenreIdInvalidoNaoDeveAdicionarOFilme()
-        {
-            // Arrange
-            var handler = GetCommandHandler();
-            _successAddMovieCommand!.GenreId = 0;
-            
-            // Act
-            var result = await handler.Handle(_successAddMovieCommand);
-
             // Assert
             result.Success.Should().BeFalse();
         }
         [Test]
-        public async Task DadoUmAddMovieCommandComNameMinimoInvalidoNaoDeveAdicionarOFilme()
-        {
-            // Arrange
-            var handler = GetCommandHandler();
-            _successAddMovieCommand!.Name = string.Empty;
-            
-            // Act
-            var result = await handler.Handle(_successAddMovieCommand);
-
-            // Assert
-            result.Success.Should().BeFalse();
-        }
-        [Test]
-        public async Task DadoUmAddMovieCommandValidNaoDeveAdicionarOFilmeCasoOcorraFalhaAoSalvarNoBanco()
+        public async Task DadoUmUpdateMovieCommandValidoNaoDeveDeletarOsFilmesCasoOcorraFalhaAoSalvarNoBanco()
         {
             // Arrange
             var handler = GetCommandHandler();
@@ -84,25 +58,11 @@ namespace Movies.Unit.Tests.Commands.Movies
                 .ReturnsAsync(0);
             
             // Act
-            var result = await handler.Handle(_successAddMovieCommand);
-
-            // Assert
-            result.Success.Should().BeFalse();
-            result.Error.Should().Be(BusinessErrors.FailToCreateMovie.ToString());
-        }
-        
-        [Test]
-        public async Task DadoUmAddMovieCommandComNameMaximoInvalidoNaoDeveAdicionarOFilme()
-        {
-            // Arrange
-            var handler = GetCommandHandler();
-            _successAddMovieCommand!.Name = GenerateRandomString(201);;
+            var result = await handler.Handle(_successDeleteMoviesCommand);
             
-            // Act
-            var result = await handler.Handle(_successAddMovieCommand);
-
             // Assert
             result.Success.Should().BeFalse();
+            result.Error.Should().Be(BusinessErrors.FailToDeleteMovies.ToString());
         }
         
         private Mock<IMovieRepository>? _moqMovieRepository;
@@ -112,12 +72,14 @@ namespace Movies.Unit.Tests.Commands.Movies
         private Mock<ICommandResult>? _moqCommandResult;
         private IMapper? _moqMapper;
         
-        private AddMovieCommand? _successAddMovieCommand;
+        private DeleteMoviesCommand? _successDeleteMoviesCommand;
         private Movie? _movie;
+        private Movie? _movie2;
         private Genre? _genre;
 
         private ICommandResult _commandResultSuccess;
-        private AddMovieCommandValidator _validator;
+        private DeleteMoviesCommandValidator _validator;
+        
 
         [SetUp]
         public void SetUp()
@@ -134,7 +96,7 @@ namespace Movies.Unit.Tests.Commands.Movies
             _moqCommandResult = new(MockBehavior.Default);
             _moqMovieRepository = new(MockBehavior.Default);
             _moqBaseMovieHandler = new(MockBehavior.Default);
-            _validator = new AddMovieCommandValidator();
+            _validator = new DeleteMoviesCommandValidator();
             MoqBaseMovies();
         }
         private void MoqBaseMovies()
@@ -181,57 +143,53 @@ namespace Movies.Unit.Tests.Commands.Movies
                 Genre = _genre,
                 GenreId = _genre.Id,
             };
-            _successAddMovieCommand = new AddMovieCommand
+            _movie2 = new()
             {
-                Name = "A volta dos que não foram",
+                Id = 2,
+                Name = "A volta dos que não foram 2",
                 Active = true,
-                GenreId = 1
+                RegistrationDate = new DateTime(2010, 1, 11),
+                Genre = _genre,
+                GenreId = _genre.Id,
             };
+            
+            var movies = new List<long>()
+            {
+                _movie.Id,
+                _movie2.Id
+            };
+            _successDeleteMoviesCommand = new DeleteMoviesCommand(movies);
         }
-
-        private AddMovieCommandHandlerFake GetCommandHandler()
+        private DeleteMoviesCommandHandlerFake GetCommandHandler()
         {
-            return new AddMovieCommandHandlerFake(
+            return new DeleteMoviesCommandHandlerFake(
                 _moqBaseMovieHandler?.Object,
                 _validator
             );
         }
-        private string GenerateRandomString(int length)
-        {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var random = new Random();
-            var result = new StringBuilder(length);
+    }
+    public class DeleteMoviesCommandHandlerFake
+    {
+        private readonly IBaseMovieHandler _baseMovieHandler;
+        private readonly DeleteMoviesCommandValidator _validator;
 
-            for (int i = 0; i < length; i++)
+        public DeleteMoviesCommandHandlerFake(IBaseMovieHandler baseMovieHandler, DeleteMoviesCommandValidator validator)
+        {
+            _baseMovieHandler = baseMovieHandler;
+            _validator = validator;
+        }
+
+        public async Task<ICommandResult> Handle(DeleteMoviesCommand command)
+        {
+            var validationResult = await _validator.ValidateAsync(command);
+
+            if (!validationResult.IsValid)
             {
-                result.Append(chars[random.Next(chars.Length)]);
+                return _baseMovieHandler.Result.Fail(string.Join('\n', validationResult.Errors));
             }
 
-            return result.ToString();
+            var commandHandler = new DeleteMoviesCommandHandler(_baseMovieHandler);
+            return await commandHandler.Handle(command, default);
         }
-    }
-}
-public class AddMovieCommandHandlerFake
-{
-    private readonly IBaseMovieHandler _baseMovieHandler;
-    private readonly AddMovieCommandValidator _validator;
-
-    public AddMovieCommandHandlerFake(IBaseMovieHandler baseMovieHandler, AddMovieCommandValidator validator)
-    {
-        _baseMovieHandler = baseMovieHandler;
-        _validator = validator;
-    }
-
-    public async Task<ICommandResult> Handle(AddMovieCommand command)
-    {
-        var validationResult = await _validator.ValidateAsync(command);
-
-        if (!validationResult.IsValid)
-        {
-            return _baseMovieHandler.Result.Fail(string.Join('\n', validationResult.Errors));
-        }
-
-        var commandHandler = new AddMovieCommandHandler(_baseMovieHandler);
-        return await commandHandler.Handle(command, default);
     }
 }
