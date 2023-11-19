@@ -15,6 +15,7 @@ export default function Movie() {
     });
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState('');
+
     useEffect(() => {
         const fetchGenres = async () => {
             try {
@@ -24,32 +25,28 @@ export default function Movie() {
                 console.error('Erro ao buscar gêneros:', error);
             }
         };
-
-        fetchGenres();
-    }, []);
-    useEffect(() => {
-        async function loadMovie() {
-            const response = await api.get(`/movies/${id}`);
-            setFilme(response.data);
-            setFormData({
-                name: response.data.name,
-                genre: response.data.genre.name,
-                genreId: response.data.genre.id,
-                active: response.data.active,
-            });
-            setSelectedGenre(response.data.genre.name); // Defina o gênero atual
-            setLoading(false);
-        }
-
-        loadMovie();
-
-        return () => {
-            console.log("Componente Desmontado!");
+        const fetchMovie = async () => {
+            try {
+                const response = await api.get(`/movies/${id}`);
+                setFilme(response.data);
+                setFormData({
+                    name: response.data.name,
+                    genre: response.data.genre.name,
+                    genreId: response.data.genre.id,
+                    active: response.data.active,
+                });
+                setSelectedGenre(response.data.genre.name);
+                setLoading(false);
+            } catch (error) {
+                console.error('Erro ao buscar filme:', error);
+            }
         };
-    }, [id]);
+        fetchGenres();
+        fetchMovie();
+    }, []);
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
@@ -57,7 +54,6 @@ export default function Movie() {
     };
 
     const salvarFilme = async () => {
-        // Faça a chamada para salvar os dados no backend
         await api.put(`/movies/${id}`, {
             name: formData.name,
             active: formData.active,
@@ -94,7 +90,6 @@ export default function Movie() {
                             value={selectedGenre}
                             onChange={(e) => {
                                 setSelectedGenre(e.target.value);
-                                // Atualiza também o genreId no formData ao selecionar uma opção
                                 setFormData((prevData) => ({
                                     ...prevData,
                                     genreId: genres.find((genre) => genre.name === e.target.value)?.id || "",
@@ -120,7 +115,7 @@ export default function Movie() {
                             onChange={() => {
                                 setFormData((prevData) => ({
                                     ...prevData,
-                                    active: !prevData.active, // Inverte o valor do active ao clicar no checkbox
+                                    active: !prevData.active,
                                 }));
                             }}
                         />
