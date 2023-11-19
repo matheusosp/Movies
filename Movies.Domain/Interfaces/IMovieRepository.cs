@@ -12,6 +12,7 @@ namespace Movies.Domain.Interfaces
     public interface IMovieRepository
     {
         Task CreateMovie(Movie movie, CancellationToken cancellationToken);
+        Task CreateMovies(IEnumerable<Movie> movies, CancellationToken cancellationToken);
         void UpdateMovie(Movie movie);
         void DeleteMovie(Movie movie);
         void DeleteMovies(IEnumerable<long> movieIds);

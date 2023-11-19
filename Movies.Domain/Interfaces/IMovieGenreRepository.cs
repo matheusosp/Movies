@@ -12,6 +12,7 @@ namespace Movies.Domain.Interfaces
     public interface IMovieGenreRepository
     {
         Task CreateGenre(Genre genre, CancellationToken cancellationToken);
+        Task CreateGenres(IEnumerable<Genre> genres, CancellationToken cancellationToken);
         void UpdateGenre(Genre genre);
         void DeleteGenre(Genre genre);
         void DeleteGenres(IEnumerable<Genre> Genre);

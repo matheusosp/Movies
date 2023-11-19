@@ -23,6 +23,10 @@ namespace Movies.Infrastructure.Repositories
         {
             if (_context.Movies != null) await _context.Genres.AddAsync(genre, cancellationToken);
         }
+        public async Task CreateGenres(IEnumerable<Genre> genres, CancellationToken cancellationToken)
+        {
+            if (_context.Movies != null) await _context.Genres.AddRangeAsync(genres, cancellationToken);
+        }
 
         public void UpdateGenre(Genre genre)
         {

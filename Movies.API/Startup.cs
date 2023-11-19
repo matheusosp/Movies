@@ -32,7 +32,7 @@ namespace Movies.API
             {
                 options.AddPolicy("EnableCORS", policyBuilder =>
                 {
-                    policyBuilder.WithOrigins("http://localhost:3000")
+                    policyBuilder.WithOrigins(Configuration.GetSection("CORSOrigin").Value)
                         .AllowAnyHeader().AllowAnyMethod().AllowCredentials().Build();
                 });
             });

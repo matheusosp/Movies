@@ -11,6 +11,7 @@ namespace Movies.Domain.Entities.Enums
         EmailAlreadyRegistered,
         EntityNotFoundInDataBase,
         ErrorOnSaveChangesInDatabase,
+        ThereNoActiveMoviesInCommand,
 
         FailToCreateMovie,
         FailToUpdateMovie,

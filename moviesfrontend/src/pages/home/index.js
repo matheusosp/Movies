@@ -34,20 +34,6 @@ export default function Movies() {
                 throw error;
             }
         };
-
-        const user = atob(localStorage.getItem('user'));
-        if(!user || !user.accessToken || (new Date(user.expiration).getTime() < new Date().getTime())){
-            authenticate()
-                .then(data => {
-                    localStorage.setItem('user', btoa(JSON.stringify(data)));
-                })
-                .catch(error => {
-                    console.error('Erro durante a autenticação ou ao salvar no localStorage:', error);
-                });
-
-        }
-    }, []);
-    useEffect(() => {
         const fetchData = async () => {
             try {
                 const moviesData = await api.get('/movies');
@@ -57,10 +43,6 @@ export default function Movies() {
             }
         };
 
-        fetchData();
-    }, []);
-
-    useEffect(() => {
         const fetchGenres = async () => {
             try {
                 const genresData = await api.get('/movies/genres');
@@ -70,8 +52,21 @@ export default function Movies() {
             }
         };
 
-        fetchGenres();
+        const user = atob(localStorage.getItem('user'));
+        if(!user || !user.accessToken || (new Date(user.expiration).getTime() < new Date().getTime())){
+            authenticate()
+                .then(data => {
+                    localStorage.setItem('user', btoa(JSON.stringify(data)));
+                    fetchData();
+                    fetchGenres();
+                })
+                .catch(error => {
+                    console.error('Erro durante a autenticação ou ao salvar no localStorage:', error);
+                });
+        }
+
     }, []);
+
     const handleFilmClick = (filmId) => {
         setSelectedFilms((prevSelected) => {
             if (prevSelected.includes(filmId)) {

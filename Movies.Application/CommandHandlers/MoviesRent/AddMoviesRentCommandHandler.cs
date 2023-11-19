@@ -37,9 +37,12 @@ namespace Movies.Application.CommandHandlers.MoviesRent
             var movies = await _movieRepository
                 .GetAllByWithTracking(m => uniqueMovieIds.Contains(m.Id), cancellationToken);
 
+            var activeMovies = movies.Where(m => m.Active).ToList();
+            if(activeMovies.Count == 0)
+                return _result.Fail(BusinessErrors.ThereNoActiveMoviesInCommand.ToString());
             var moviesRent = new MovieRent
             {
-                Movies = movies,
+                Movies = activeMovies,
                 CPFClient = request.CPFClient,
                 RentDate = DateTime.Now
             };

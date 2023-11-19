@@ -24,7 +24,10 @@ namespace Movies.Infrastructure.Repositories
         {
             if (_context.Movies != null) await _context.Movies.AddAsync(movie, cancellationToken);
         }
-
+        public async Task CreateMovies(IEnumerable<Movie> movies, CancellationToken cancellationToken)
+        {
+            if (_context.Movies != null) await _context.Movies.AddRangeAsync(movies, cancellationToken);
+        }
         public void UpdateMovie(Movie movie)
         {
             _context.Entry(movie).State = EntityState.Modified;
