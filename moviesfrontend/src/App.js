@@ -7,7 +7,6 @@ import {TokenServiceProvider} from "./core/token/token.service";
 function App() {
   return (
     <div className="App">
-
       <Routes />
     </div>
   );

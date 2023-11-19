@@ -1,15 +1,19 @@
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Movies from "./pages/movies";
+import Movies from "./pages/home";
 import Header from "./shared/components/Header/header";
 import Movie from "./pages/movies/edit-movie";
 
 const Routes = () =>{
     return(
-        <BrowserRouter>
+        <BrowserRouter forceRefresh>
             <Header/>
             <Switch>
-                <Route exact path='/' component={Movies}/>
-                <Route exact path='/filme/:id' component={Movie}/>
+                <Route path="/" exact>
+                    <Movies/>
+                </Route>
+                <Route path="/movies/:id" exact>
+                    <Movie/>
+                </Route>
             </Switch>
         </BrowserRouter>
     )

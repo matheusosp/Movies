@@ -1,0 +1,62 @@
+.filme-info{
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    color: #FFF;
+
+}
+.filme-info img{
+    border-radius: 20px;
+}
+.filme-info button{
+    margin-right: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0;
+    font-size: 20px;
+    outline: none;
+    padding: 12px;
+    transition: all 0.5s;
+}
+
+.filme-info button:hover{
+    background-color: brown;
+    color: #FFF;
+}
+
+.filme-info a{
+    text-decoration: none;
+    color: #000;
+    transition: all 0.5s;
+}
+.filme-info a:hover{
+    color: #FFF;
+}
+/* Adicione estilos para o dropdown de gêneros */
+label select {
+    padding: 8px;
+    margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #000;
+}
+
+label select:hover {
+    border-color: #555;
+}
+
+/* Adicione estilos para as opções do dropdown */
+label select option {
+    background-color: #fff;
+    color: #000;
+}
+
+label select option:hover {
+    background-color: #eee;
+}
+

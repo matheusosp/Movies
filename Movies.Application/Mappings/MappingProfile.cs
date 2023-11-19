@@ -25,6 +25,7 @@ namespace Movies.Application.Mappings
                     opt => opt.MapFrom(src => DateTime.Now));
 
             CreateMap<Movie, MovieResponse>();
+            CreateMap<Genre, GenreResponse>();
         }
     }
 }

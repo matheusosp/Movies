@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./movies.css";
-import {useParams, useHistory, Link} from "react-router-dom";
+import {useParams, useHistory, Link, BrowserRouter} from "react-router-dom";
 import api from "../../core/interceptors/request-interceptor";
 
 export default function Movies() {
@@ -66,8 +66,8 @@ export default function Movies() {
                         <article key={filme.id}>
                             <strong>Titulo: {filme.name}</strong>
                             <strong>Genero: {filme.genre.name}</strong>
-                            <strong>Data de registro: {dataFormatada}</strong>
-                            <Link to={`/filme/${filme.id}`}>Editar</Link>
+                            <strong>Data de registro: {dataFormatada}</strong>>
+                            <Link to={{pathname: `/movies/${filme.id}`}}>Editar</Link>
                         </article>
                     );
                 })}
