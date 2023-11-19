@@ -52,7 +52,14 @@ namespace Movies.API.Controllers
 
             return HandleResult(result);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMovieById(long id, CancellationToken cancellationToken)
+        {
+            var query = new RetrieveMovieByIdQuery(id);
+            var result = await Mediator.Send(query, cancellationToken);
 
+            return HandleResult(result);
+        }
         [HttpGet]
         public async Task<IActionResult> GetAllMovies(CancellationToken cancellationToken)
         {

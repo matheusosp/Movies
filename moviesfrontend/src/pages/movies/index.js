@@ -64,7 +64,7 @@ export default function Movies() {
                     const dataFormatada = `${dia < 10 ? '0' : ''}${dia}/${mes < 10 ? '0' : ''}${mes}/${ano}`;
                     return (
                         <article key={filme.id}>
-                            <strong>{filme.name}</strong>
+                            <strong>Titulo: {filme.name}</strong>
                             <strong>Genero: {filme.genre.name}</strong>
                             <strong>Data de registro: {dataFormatada}</strong>
                             <Link to={`/filme/${filme.id}`}>Editar</Link>

@@ -70,7 +70,7 @@ namespace Movies.Infrastructure.Repositories
             if (_context.Movies == null) return null;
 
             var movie = await _context.Movies.AsNoTracking()
-                .FirstOrDefaultAsync(predicate, cancellationToken);
+                .Include(m => m.Genre).FirstOrDefaultAsync(predicate, cancellationToken);
             return movie;
         }
     }
